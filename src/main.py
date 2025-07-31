@@ -70,6 +70,9 @@ def init_database():
         
         db.session.commit()
 
+# Inicializar banco de dados
+init_database()
+
 # Rotas de autenticação
 @app.route('/api/auth/login', methods=['POST'])
 def login():
