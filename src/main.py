@@ -17,19 +17,24 @@ from src.models.user import db, User
 from src.routes.user import user_bp
 
 app = Flask(__name__, static_folder=os.path.join(os.path.dirname(__file__), 'static'))
-app.config['SECRET_KEY'] = 'asdf#FGSgvasgf$5$WGT'
-app.config['UPLOAD_FOLDER'] = os.path.join(os.path.dirname(__file__), 'uploads')
 
-# Configurar CORS
-CORS(app, origins="*", supports_credentials=True)
+# Configuração do Flask
+app.config['SECRET_KEY'] = 'kn-scribe-secret-key-2024'
+app.config['UPLOAD_FOLDER'] = '/tmp/uploads'  # Usar /tmp no Vercel
+app.config['MAX_CONTENT_LENGTH'] = 100 * 1024 * 1024  # 100MB max
 
-# Criar diretório de uploads se não existir
-os.makedirs(app.config['UPLOAD_FOLDER'], exist_ok=True)
-
+# Criar diretório de uploads se não existir (apenas se não estivermos no Vercel)
+try:
+    os.makedirs(app.config['UPLOAD_FOLDER'], exist_ok=True)
+except OSError:
+    # Se não conseguir criar, usar apenas /tmp
+    app.config['UPLOAD_FOLDER'] = '/tmp'
 app.register_blueprint(user_bp, url_prefix='/api')
 
 # Configuração do banco de dados
-app.config['SQLALCHEMY_DATABASE_URI'] = f"sqlite:///{os.path.join(os.path.dirname(__file__), 'database', 'app.db')}"
+# Usar /tmp para o banco de dados no Vercel
+db_path = '/tmp/app.db' if os.environ.get('VERCEL') else os.path.join(os.path.dirname(__file__), 'database', 'app.db')
+app.config['SQLALCHEMY_DATABASE_URI'] = f"sqlite:///{db_path}"
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 db.init_app(app)
 
