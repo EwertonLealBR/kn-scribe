@@ -1,0 +1,538 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>KN Scribe - Transcrição de Áudio Inteligente</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .container {
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+            padding: 40px;
+            width: 100%;
+            max-width: 500px;
+            text-align: center;
+        }
+
+        .logo {
+            font-size: 2.5rem;
+            color: #667eea;
+            margin-bottom: 10px;
+        }
+
+        .subtitle {
+            color: #666;
+            margin-bottom: 30px;
+            font-size: 1.1rem;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+            text-align: left;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 8px;
+            color: #333;
+            font-weight: 500;
+        }
+
+        input[type="text"], input[type="email"], input[type="password"], input[type="file"] {
+            width: 100%;
+            padding: 12px 16px;
+            border: 2px solid #e1e5e9;
+            border-radius: 10px;
+            font-size: 16px;
+            transition: border-color 0.3s ease;
+        }
+
+        input[type="text"]:focus, input[type="email"]:focus, input[type="password"]:focus, input[type="file"]:focus {
+            outline: none;
+            border-color: #667eea;
+        }
+
+        .btn {
+            width: 100%;
+            padding: 14px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            border-radius: 10px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: transform 0.2s ease;
+            margin-bottom: 15px;
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+        }
+
+        .btn:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .link {
+            color: #667eea;
+            text-decoration: none;
+            font-weight: 500;
+        }
+
+        .link:hover {
+            text-decoration: underline;
+        }
+
+        .error {
+            background: #fee;
+            color: #c33;
+            padding: 12px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            border: 1px solid #fcc;
+        }
+
+        .success {
+            background: #efe;
+            color: #363;
+            padding: 12px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            border: 1px solid #cfc;
+        }
+
+        .hidden {
+            display: none;
+        }
+
+        .dashboard {
+            text-align: left;
+        }
+
+        .user-info {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 10px;
+            margin-bottom: 30px;
+        }
+
+        .upload-area {
+            border: 2px dashed #667eea;
+            border-radius: 10px;
+            padding: 40px;
+            text-align: center;
+            margin-bottom: 20px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .upload-area:hover {
+            background-color: #f8f9ff;
+        }
+
+        .upload-area.dragover {
+            background-color: #e6f0ff;
+            border-color: #4a90e2;
+        }
+
+        .transcription-result {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 10px;
+            margin-top: 20px;
+            text-align: left;
+        }
+
+        .transcription-text {
+            background: white;
+            padding: 15px;
+            border-radius: 8px;
+            border: 1px solid #e1e5e9;
+            min-height: 100px;
+            white-space: pre-wrap;
+            font-family: 'Courier New', monospace;
+        }
+
+        .loading {
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            border: 3px solid #f3f3f3;
+            border-top: 3px solid #667eea;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin-right: 10px;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .logout-btn {
+            background: #dc3545;
+            margin-top: 20px;
+        }
+
+        .copy-btn {
+            background: #28a745;
+            margin-top: 10px;
+            padding: 8px 16px;
+            font-size: 14px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Tela de Login -->
+        <div id="loginScreen">
+            <div class="logo">🎤 KN Scribe</div>
+            <div class="subtitle">Faça login para continuar</div>
+            
+            <div id="errorMessage" class="error hidden"></div>
+            
+            <form id="loginForm">
+                <div class="form-group">
+                    <label for="emailOrUsername">Usuário ou Email</label>
+                    <input type="text" id="emailOrUsername" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="password">Senha</label>
+                    <input type="password" id="password" required>
+                </div>
+                
+                <button type="submit" class="btn" id="loginBtn">
+                    <span id="loginBtnText">Entrar</span>
+                </button>
+            </form>
+        </div>
+
+        <!-- Dashboard -->
+        <div id="dashboard" class="dashboard hidden">
+            <div class="logo">🎤 KN Scribe</div>
+            <div class="subtitle">Transcrição de Áudio Inteligente</div>
+            
+            <div class="user-info">
+                <h3>Bem-vindo, <span id="userName"></span>!</h3>
+                <p>Email: <span id="userEmail"></span></p>
+            </div>
+
+            <div id="dashboardError" class="error hidden"></div>
+            <div id="dashboardSuccess" class="success hidden"></div>
+
+            <div class="upload-area" id="uploadArea">
+                <div>
+                    <h3>📁 Enviar Arquivo de Áudio</h3>
+                    <p>Clique aqui ou arraste um arquivo de áudio</p>
+                    <p><small>Formatos suportados: MP3, WAV, M4A, FLAC</small></p>
+                </div>
+                <input type="file" id="audioFile" accept="audio/*" style="display: none;">
+            </div>
+
+            <button id="transcribeBtn" class="btn hidden">
+                <span id="transcribeBtnText">Transcrever Áudio</span>
+            </button>
+
+            <div id="transcriptionResult" class="transcription-result hidden">
+                <h3>Resultado da Transcrição:</h3>
+                <div id="transcriptionText" class="transcription-text"></div>
+                <button id="copyBtn" class="btn copy-btn">Copiar Texto</button>
+            </div>
+
+            <button id="logoutBtn" class="btn logout-btn">Sair</button>
+        </div>
+    </div>
+
+    <script>
+        // Elementos DOM
+        const loginScreen = document.getElementById('loginScreen');
+        const dashboard = document.getElementById('dashboard');
+        const loginForm = document.getElementById('loginForm');
+        const errorMessage = document.getElementById('errorMessage');
+        const dashboardError = document.getElementById('dashboardError');
+        const dashboardSuccess = document.getElementById('dashboardSuccess');
+        const userName = document.getElementById('userName');
+        const userEmail = document.getElementById('userEmail');
+        const uploadArea = document.getElementById('uploadArea');
+        const audioFile = document.getElementById('audioFile');
+        const transcribeBtn = document.getElementById('transcribeBtn');
+        const transcriptionResult = document.getElementById('transcriptionResult');
+        const transcriptionText = document.getElementById('transcriptionText');
+        const copyBtn = document.getElementById('copyBtn');
+        const logoutBtn = document.getElementById('logoutBtn');
+        const loginBtn = document.getElementById('loginBtn');
+        const loginBtnText = document.getElementById('loginBtnText');
+        const transcribeBtnText = document.getElementById('transcribeBtnText');
+
+        // Estado da aplicação
+        let currentUser = null;
+        let authToken = null;
+        let selectedFile = null;
+
+        // Verificar se há token salvo
+        function checkAuth() {
+            const token = localStorage.getItem('authToken');
+            if (token) {
+                verifyToken(token);
+            }
+        }
+
+        // Verificar token
+        async function verifyToken(token) {
+            try {
+                const response = await fetch('/api/auth/verify', {
+                    headers: {
+                        'Authorization': `Bearer ${token}`
+                    }
+                });
+
+                if (response.ok) {
+                    const data = await response.json();
+                    if (data.success) {
+                        authToken = token;
+                        currentUser = data.user;
+                        showDashboard();
+                        return;
+                    }
+                }
+            } catch (error) {
+                console.error('Erro ao verificar token:', error);
+            }
+            
+            localStorage.removeItem('authToken');
+            showLogin();
+        }
+
+        // Mostrar tela de login
+        function showLogin() {
+            loginScreen.classList.remove('hidden');
+            dashboard.classList.add('hidden');
+            hideError();
+        }
+
+        // Mostrar dashboard
+        function showDashboard() {
+            loginScreen.classList.add('hidden');
+            dashboard.classList.remove('hidden');
+            userName.textContent = currentUser.username;
+            userEmail.textContent = currentUser.email;
+            hideError();
+            hideDashboardMessages();
+        }
+
+        // Mostrar erro
+        function showError(message) {
+            errorMessage.textContent = message;
+            errorMessage.classList.remove('hidden');
+        }
+
+        // Esconder erro
+        function hideError() {
+            errorMessage.classList.add('hidden');
+        }
+
+        // Mostrar erro no dashboard
+        function showDashboardError(message) {
+            dashboardError.textContent = message;
+            dashboardError.classList.remove('hidden');
+            dashboardSuccess.classList.add('hidden');
+        }
+
+        // Mostrar sucesso no dashboard
+        function showDashboardSuccess(message) {
+            dashboardSuccess.textContent = message;
+            dashboardSuccess.classList.remove('hidden');
+            dashboardError.classList.add('hidden');
+        }
+
+        // Esconder mensagens do dashboard
+        function hideDashboardMessages() {
+            dashboardError.classList.add('hidden');
+            dashboardSuccess.classList.add('hidden');
+        }
+
+        // Login
+        loginForm.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            
+            const emailOrUsername = document.getElementById('emailOrUsername').value;
+            const password = document.getElementById('password').value;
+
+            loginBtn.disabled = true;
+            loginBtnText.innerHTML = '<span class="loading"></span>Entrando...';
+
+            try {
+                const response = await fetch('/api/auth/login', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        email_or_username: emailOrUsername,
+                        password: password
+                    })
+                });
+
+                const data = await response.json();
+
+                if (response.ok && data.success) {
+                    authToken = data.token;
+                    currentUser = data.user;
+                    localStorage.setItem('authToken', authToken);
+                    showDashboard();
+                } else {
+                    showError(data.error || 'Erro ao fazer login');
+                }
+            } catch (error) {
+                showError('Erro de conexão. Tente novamente.');
+            } finally {
+                loginBtn.disabled = false;
+                loginBtnText.textContent = 'Entrar';
+            }
+        });
+
+        // Upload de arquivo
+        uploadArea.addEventListener('click', () => {
+            audioFile.click();
+        });
+
+        uploadArea.addEventListener('dragover', (e) => {
+            e.preventDefault();
+            uploadArea.classList.add('dragover');
+        });
+
+        uploadArea.addEventListener('dragleave', () => {
+            uploadArea.classList.remove('dragover');
+        });
+
+        uploadArea.addEventListener('drop', (e) => {
+            e.preventDefault();
+            uploadArea.classList.remove('dragover');
+            
+            const files = e.dataTransfer.files;
+            if (files.length > 0) {
+                handleFileSelect(files[0]);
+            }
+        });
+
+        audioFile.addEventListener('change', (e) => {
+            if (e.target.files.length > 0) {
+                handleFileSelect(e.target.files[0]);
+            }
+        });
+
+        function handleFileSelect(file) {
+            if (!file.type.startsWith('audio/')) {
+                showDashboardError('Por favor, selecione um arquivo de áudio válido.');
+                return;
+            }
+
+            selectedFile = file;
+            uploadArea.innerHTML = `
+                <div>
+                    <h3>✅ Arquivo Selecionado</h3>
+                    <p><strong>${file.name}</strong></p>
+                    <p>Tamanho: ${(file.size / 1024 / 1024).toFixed(2)} MB</p>
+                </div>
+            `;
+            transcribeBtn.classList.remove('hidden');
+            hideDashboardMessages();
+        }
+
+        // Transcrição
+        transcribeBtn.addEventListener('click', async () => {
+            if (!selectedFile) {
+                showDashboardError('Nenhum arquivo selecionado.');
+                return;
+            }
+
+            transcribeBtn.disabled = true;
+            transcribeBtnText.innerHTML = '<span class="loading"></span>Transcrevendo...';
+            hideDashboardMessages();
+
+            const formData = new FormData();
+            formData.append('audio', selectedFile);
+
+            try {
+                const response = await fetch('/api/transcribe', {
+                    method: 'POST',
+                    headers: {
+                        'Authorization': `Bearer ${authToken}`
+                    },
+                    body: formData
+                });
+
+                const data = await response.json();
+
+                if (response.ok && data.success) {
+                    transcriptionText.textContent = data.transcription;
+                    transcriptionResult.classList.remove('hidden');
+                    showDashboardSuccess('Transcrição concluída com sucesso!');
+                } else {
+                    showDashboardError(data.error || 'Erro na transcrição');
+                }
+            } catch (error) {
+                showDashboardError('Erro de conexão durante a transcrição.');
+            } finally {
+                transcribeBtn.disabled = false;
+                transcribeBtnText.textContent = 'Transcrever Áudio';
+            }
+        });
+
+        // Copiar texto
+        copyBtn.addEventListener('click', () => {
+            navigator.clipboard.writeText(transcriptionText.textContent).then(() => {
+                showDashboardSuccess('Texto copiado para a área de transferência!');
+            }).catch(() => {
+                showDashboardError('Erro ao copiar texto.');
+            });
+        });
+
+        // Logout
+        logoutBtn.addEventListener('click', () => {
+            localStorage.removeItem('authToken');
+            authToken = null;
+            currentUser = null;
+            selectedFile = null;
+            
+            // Reset form
+            loginForm.reset();
+            uploadArea.innerHTML = `
+                <div>
+                    <h3>📁 Enviar Arquivo de Áudio</h3>
+                    <p>Clique aqui ou arraste um arquivo de áudio</p>
+                    <p><small>Formatos suportados: MP3, WAV, M4A, FLAC</small></p>
+                </div>
+            `;
+            transcribeBtn.classList.add('hidden');
+            transcriptionResult.classList.add('hidden');
+            
+            showLogin();
+        });
+
+        // Inicializar aplicação
+        checkAuth();
+    </script>
+</body>
+</html>
+
