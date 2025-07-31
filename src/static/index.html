@@ -21,69 +21,84 @@
         }
 
         .container {
-            background: white;
+            background: rgba(255, 255, 255, 0.95);
+            padding: 2rem;
             border-radius: 20px;
             box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
-            padding: 40px;
             width: 100%;
-            max-width: 500px;
+            max-width: 800px;
+            backdrop-filter: blur(10px);
+        }
+
+        .header {
             text-align: center;
+            margin-bottom: 2rem;
         }
 
-        .logo {
+        .header h1 {
+            color: #333;
             font-size: 2.5rem;
-            color: #667eea;
-            margin-bottom: 10px;
+            margin-bottom: 0.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
         }
 
-        .subtitle {
+        .header p {
             color: #666;
-            margin-bottom: 30px;
             font-size: 1.1rem;
         }
 
-        .form-group {
-            margin-bottom: 20px;
-            text-align: left;
+        .login-section, .app-section {
+            display: none;
         }
 
-        label {
+        .login-section.active, .app-section.active {
             display: block;
-            margin-bottom: 8px;
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
             color: #333;
             font-weight: 500;
         }
 
-        input[type="text"], input[type="email"], input[type="password"], input[type="file"] {
+        .form-group input {
             width: 100%;
-            padding: 12px 16px;
+            padding: 1rem;
             border: 2px solid #e1e5e9;
             border-radius: 10px;
-            font-size: 16px;
-            transition: border-color 0.3s ease;
+            font-size: 1rem;
+            transition: border-color 0.3s;
         }
 
-        input[type="text"]:focus, input[type="email"]:focus, input[type="password"]:focus, input[type="file"]:focus {
+        .form-group input:focus {
             outline: none;
             border-color: #667eea;
         }
 
         .btn {
-            width: 100%;
-            padding: 14px;
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             color: white;
             border: none;
+            padding: 1rem 2rem;
             border-radius: 10px;
-            font-size: 16px;
-            font-weight: 600;
+            font-size: 1rem;
             cursor: pointer;
-            transition: transform 0.2s ease;
-            margin-bottom: 15px;
+            transition: transform 0.2s, box-shadow 0.2s;
+            width: 100%;
+            margin-bottom: 1rem;
         }
 
         .btn:hover {
             transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(102, 126, 234, 0.3);
         }
 
         .btn:disabled {
@@ -92,95 +107,334 @@
             transform: none;
         }
 
-        .link {
-            color: #667eea;
-            text-decoration: none;
+        .btn-secondary {
+            background: #6c757d;
+        }
+
+        .btn-danger {
+            background: #dc3545;
+        }
+
+        .btn-success {
+            background: #28a745;
+        }
+
+        .error-message {
+            background: #f8d7da;
+            color: #721c24;
+            padding: 1rem;
+            border-radius: 10px;
+            margin-bottom: 1rem;
+            border: 1px solid #f5c6cb;
+        }
+
+        .success-message {
+            background: #d4edda;
+            color: #155724;
+            padding: 1rem;
+            border-radius: 10px;
+            margin-bottom: 1rem;
+            border: 1px solid #c3e6cb;
+        }
+
+        .tabs {
+            display: flex;
+            margin-bottom: 2rem;
+            border-bottom: 2px solid #e1e5e9;
+        }
+
+        .tab {
+            flex: 1;
+            padding: 1rem;
+            text-align: center;
+            cursor: pointer;
+            border-bottom: 3px solid transparent;
+            transition: all 0.3s;
             font-weight: 500;
         }
 
-        .link:hover {
-            text-decoration: underline;
+        .tab.active {
+            border-bottom-color: #667eea;
+            color: #667eea;
         }
 
-        .error {
-            background: #fee;
-            color: #c33;
-            padding: 12px;
-            border-radius: 8px;
-            margin-bottom: 20px;
-            border: 1px solid #fcc;
-        }
-
-        .success {
-            background: #efe;
-            color: #363;
-            padding: 12px;
-            border-radius: 8px;
-            margin-bottom: 20px;
-            border: 1px solid #cfc;
-        }
-
-        .hidden {
+        .tab-content {
             display: none;
         }
 
-        .dashboard {
-            text-align: left;
-        }
-
-        .user-info {
-            background: #f8f9fa;
-            padding: 20px;
-            border-radius: 10px;
-            margin-bottom: 30px;
+        .tab-content.active {
+            display: block;
         }
 
         .upload-area {
-            border: 2px dashed #667eea;
-            border-radius: 10px;
-            padding: 40px;
+            border: 3px dashed #667eea;
+            border-radius: 15px;
+            padding: 3rem;
             text-align: center;
-            margin-bottom: 20px;
+            transition: all 0.3s;
             cursor: pointer;
-            transition: background-color 0.3s ease;
+            margin-bottom: 2rem;
         }
 
         .upload-area:hover {
-            background-color: #f8f9ff;
+            background: rgba(102, 126, 234, 0.05);
+            transform: translateY(-2px);
         }
 
         .upload-area.dragover {
-            background-color: #e6f0ff;
-            border-color: #4a90e2;
+            background: rgba(102, 126, 234, 0.1);
+            border-color: #764ba2;
         }
 
-        .transcription-result {
+        .upload-icon {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            color: #667eea;
+        }
+
+        .record-section {
+            text-align: center;
+            padding: 2rem;
+        }
+
+        .record-button {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            border: none;
+            font-size: 2rem;
+            cursor: pointer;
+            transition: all 0.3s;
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 1rem;
+        }
+
+        .record-button.ready {
+            background: #28a745;
+            color: white;
+        }
+
+        .record-button.recording {
+            background: #dc3545;
+            color: white;
+            animation: pulse 1s infinite;
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
+        }
+
+        .record-timer {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: #333;
+            margin-bottom: 1rem;
+        }
+
+        .history-section {
+            margin-top: 2rem;
+        }
+
+        .history-item {
             background: #f8f9fa;
-            padding: 20px;
+            padding: 1rem;
             border-radius: 10px;
-            margin-top: 20px;
-            text-align: left;
+            margin-bottom: 1rem;
+            border-left: 4px solid #667eea;
         }
 
-        .transcription-text {
+        .history-item h4 {
+            color: #333;
+            margin-bottom: 0.5rem;
+        }
+
+        .history-item p {
+            color: #666;
+            font-size: 0.9rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .history-item .transcript {
             background: white;
-            padding: 15px;
+            padding: 1rem;
             border-radius: 8px;
-            border: 1px solid #e1e5e9;
-            min-height: 100px;
-            white-space: pre-wrap;
-            font-family: 'Courier New', monospace;
+            margin-top: 0.5rem;
+            font-style: italic;
+            max-height: 150px;
+            overflow-y: auto;
         }
 
-        .loading {
-            display: inline-block;
-            width: 20px;
-            height: 20px;
-            border: 3px solid #f3f3f3;
-            border-top: 3px solid #667eea;
+        .history-item .actions {
+            margin-top: 1rem;
+            display: flex;
+            gap: 0.5rem;
+        }
+
+        .btn-small {
+            padding: 0.5rem 1rem;
+            font-size: 0.85rem;
+            border-radius: 5px;
+            border: none;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .btn-copy {
+            background: #17a2b8;
+            color: white;
+        }
+
+        .btn-delete {
+            background: #dc3545;
+            color: white;
+        }
+
+        .btn-small:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
+        }
+
+        .stats-section {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+
+        .stat-card {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 1.5rem;
+            border-radius: 15px;
+            text-align: center;
+            box-shadow: 0 10px 20px rgba(102, 126, 234, 0.3);
+        }
+
+        .stat-card h3 {
+            font-size: 2rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .stat-card p {
+            opacity: 0.9;
+            font-size: 0.9rem;
+        }
+
+        .floating-action {
+            position: fixed;
+            bottom: 2rem;
+            right: 2rem;
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+            box-shadow: 0 10px 20px rgba(102, 126, 234, 0.4);
+            transition: all 0.3s;
+            z-index: 1000;
+        }
+
+        .floating-action:hover {
+            transform: scale(1.1);
+            box-shadow: 0 15px 30px rgba(102, 126, 234, 0.6);
+        }
+
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 2000;
+            backdrop-filter: blur(5px);
+        }
+
+        .modal.active {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .modal-content {
+            background: white;
+            padding: 2rem;
+            border-radius: 20px;
+            max-width: 500px;
+            width: 90%;
+            max-height: 80vh;
+            overflow-y: auto;
+            animation: modalSlideIn 0.3s ease-out;
+        }
+
+        @keyframes modalSlideIn {
+            from {
+                transform: translateY(-50px);
+                opacity: 0;
+            }
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+
+        .toast {
+            position: fixed;
+            top: 2rem;
+            right: 2rem;
+            background: #28a745;
+            color: white;
+            padding: 1rem 1.5rem;
+            border-radius: 10px;
+            box-shadow: 0 10px 20px rgba(40, 167, 69, 0.3);
+            z-index: 3000;
+            transform: translateX(400px);
+            transition: transform 0.3s ease-out;
+        }
+
+        .toast.show {
+            transform: translateX(0);
+        }
+
+        .toast.error {
+            background: #dc3545;
+            box-shadow: 0 10px 20px rgba(220, 53, 69, 0.3);
+        }
+
+        .loading-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(255, 255, 255, 0.9);
+            display: none;
+            align-items: center;
+            justify-content: center;
+            z-index: 2500;
+            backdrop-filter: blur(5px);
+        }
+
+        .loading-overlay.active {
+            display: flex;
+        }
+
+        .spinner {
+            width: 50px;
+            height: 50px;
+            border: 5px solid #e1e5e9;
+            border-top: 5px solid #667eea;
             border-radius: 50%;
             animation: spin 1s linear infinite;
-            margin-right: 10px;
         }
 
         @keyframes spin {
@@ -188,350 +442,541 @@
             100% { transform: rotate(360deg); }
         }
 
-        .logout-btn {
-            background: #dc3545;
-            margin-top: 20px;
+        .wave-animation {
+            display: inline-block;
+            animation: wave 2s ease-in-out infinite;
         }
 
-        .copy-btn {
-            background: #28a745;
-            margin-top: 10px;
-            padding: 8px 16px;
-            font-size: 14px;
+        @keyframes wave {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+        }
+
+        .search-box {
+            position: relative;
+            margin-bottom: 1rem;
+        }
+
+        .search-box input {
+            width: 100%;
+            padding: 1rem 1rem 1rem 3rem;
+            border: 2px solid #e1e5e9;
+            border-radius: 10px;
+            font-size: 1rem;
+            transition: border-color 0.3s;
+        }
+
+        .search-box input:focus {
+            outline: none;
+            border-color: #667eea;
+        }
+
+        .search-box::before {
+            content: '🔍';
+            position: absolute;
+            left: 1rem;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 1.2rem;
+            z-index: 1;
+        }
+
+        .empty-state {
+            text-align: center;
+            padding: 3rem;
+            color: #666;
+        }
+
+        .empty-state img {
+            width: 100px;
+            height: 100px;
+            opacity: 0.5;
+            margin-bottom: 1rem;
+        }
+
+        .progress-ring {
+            transform: rotate(-90deg);
+        }
+
+        .progress-ring-circle {
+            stroke: #667eea;
+            stroke-width: 4;
+            stroke-linecap: round;
+            fill: transparent;
+            stroke-dasharray: 283;
+            stroke-dashoffset: 283;
+            transition: stroke-dashoffset 0.3s;
+        }
+
+        .file-preview {
+            background: #f8f9fa;
+            border: 2px dashed #dee2e6;
+            border-radius: 10px;
+            padding: 1rem;
+            margin-top: 1rem;
+            display: none;
+        }
+
+        .file-preview.active {
+            display: block;
+        }
+
+        .file-info {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .file-icon {
+            font-size: 2rem;
+        }
+
+        .file-details h4 {
+            margin: 0;
+            color: #333;
+        }
+
+        .file-details p {
+            margin: 0.25rem 0 0 0;
+            color: #666;
+            font-size: 0.9rem;
+        }
+
+        .user-info {
+            text-align: right;
+            margin-bottom: 1rem;
+            color: #666;
+        }
+
+        .logout-btn {
+            background: #6c757d;
+            color: white;
+            border: none;
+            padding: 0.5rem 1rem;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 0.9rem;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                margin: 1rem;
+                padding: 1rem;
+            }
+            
+            .header h1 {
+                font-size: 2rem;
+            }
+            
+            .tabs {
+                flex-direction: column;
+            }
+            
+            .record-button {
+                width: 100px;
+                height: 100px;
+                font-size: 1.5rem;
+            }
         }
     </style>
 </head>
 <body>
     <div class="container">
-        <!-- Tela de Login -->
-        <div id="loginScreen">
-            <div class="logo">🎤 KN Scribe</div>
-            <div class="subtitle">Faça login para continuar</div>
+        <!-- Seção de Login -->
+        <div class="login-section active" id="loginSection">
+            <div class="header">
+                <h1>🎤 KN Scribe</h1>
+                <p>Faça login para continuar</p>
+            </div>
             
-            <div id="errorMessage" class="error hidden"></div>
+            <div id="errorMessage" class="error-message" style="display: none;"></div>
             
             <form id="loginForm">
                 <div class="form-group">
-                    <label for="emailOrUsername">Usuário ou Email</label>
-                    <input type="text" id="emailOrUsername" required>
+                    <label for="email">Usuário ou Email</label>
+                    <input type="text" id="email" name="email" required>
                 </div>
                 
                 <div class="form-group">
                     <label for="password">Senha</label>
-                    <input type="password" id="password" required>
+                    <input type="password" id="password" name="password" required>
                 </div>
                 
-                <button type="submit" class="btn" id="loginBtn">
-                    <span id="loginBtnText">Entrar</span>
-                </button>
+                <button type="submit" class="btn">Entrar</button>
             </form>
         </div>
 
-        <!-- Dashboard -->
-        <div id="dashboard" class="dashboard hidden">
-            <div class="logo">🎤 KN Scribe</div>
-            <div class="subtitle">Transcrição de Áudio Inteligente</div>
-            
+        <!-- Seção Principal da Aplicação -->
+        <div class="app-section" id="appSection">
             <div class="user-info">
-                <h3>Bem-vindo, <span id="userName"></span>!</h3>
-                <p>Email: <span id="userEmail"></span></p>
+                <span id="userWelcome">Bem-vindo!</span>
+                <button class="logout-btn" onclick="logout()">Sair</button>
             </div>
 
-            <div id="dashboardError" class="error hidden"></div>
-            <div id="dashboardSuccess" class="success hidden"></div>
+            <div class="header">
+                <h1>🎤 KN Scribe</h1>
+                <p>Transcrição de Áudio Inteligente</p>
+            </div>
 
-            <div class="upload-area" id="uploadArea">
-                <div>
-                    <h3>📁 Enviar Arquivo de Áudio</h3>
-                    <p>Clique aqui ou arraste um arquivo de áudio</p>
-                    <p><small>Formatos suportados: MP3, WAV, M4A, FLAC</small></p>
+            <div class="tabs">
+                <div class="tab active" onclick="switchTab('upload')">📁 Upload</div>
+                <div class="tab" onclick="switchTab('record')">🎤 Gravar</div>
+                <div class="tab" onclick="switchTab('history')">📋 Histórico</div>
+            </div>
+
+            <!-- Aba de Upload -->
+            <div class="tab-content active" id="uploadTab">
+                <div class="upload-area" onclick="document.getElementById('fileInput').click()">
+                    <div class="upload-icon">📁</div>
+                    <h3>Enviar Arquivo de Áudio ou Vídeo</h3>
+                    <p>Clique aqui ou arraste um arquivo</p>
+                    <p style="font-size: 0.9rem; color: #666; margin-top: 1rem;">
+                        Formatos suportados: MP3, WAV, M4A, FLAC, OGG, MP4, AVI, MOV
+                    </p>
                 </div>
-                <input type="file" id="audioFile" accept="audio/*" style="display: none;">
+                <input type="file" id="fileInput" style="display: none;" accept=".mp3,.wav,.m4a,.flac,.ogg,.mp4,.avi,.mov" onchange="handleFileUpload(this.files[0])">
+                
+                <div id="uploadProgress" style="display: none;">
+                    <div style="background: #e1e5e9; border-radius: 10px; overflow: hidden; margin-bottom: 1rem;">
+                        <div id="progressBar" style="background: #667eea; height: 20px; width: 0%; transition: width 0.3s;"></div>
+                    </div>
+                    <p id="progressText">Enviando arquivo...</p>
+                </div>
             </div>
 
-            <button id="transcribeBtn" class="btn hidden">
-                <span id="transcribeBtnText">Transcrever Áudio</span>
-            </button>
+            <!-- Aba de Gravação -->
+            <div class="tab-content" id="recordTab">
+                <div class="record-section">
+                    <button class="record-button ready" id="recordButton" onclick="toggleRecording()">
+                        🎤
+                    </button>
+                    <div class="record-timer" id="recordTimer">00:00</div>
+                    <p id="recordStatus">Clique no microfone para começar a gravar</p>
+                    <button class="btn btn-success" id="saveRecording" style="display: none;" onclick="saveRecording()">
+                        Salvar e Transcrever
+                    </button>
+                </div>
+            </div>
 
-            <div id="transcriptionResult" class="transcription-result hidden">
+            <!-- Aba de Histórico -->
+            <div class="tab-content" id="historyTab">
+                <div class="history-section">
+                    <h3>Histórico de Transcrições</h3>
+                    <div id="historyList">
+                        <p style="text-align: center; color: #666; padding: 2rem;">
+                            Nenhuma transcrição encontrada
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <div id="transcriptionResult" style="display: none;">
                 <h3>Resultado da Transcrição:</h3>
-                <div id="transcriptionText" class="transcription-text"></div>
-                <button id="copyBtn" class="btn copy-btn">Copiar Texto</button>
+                <div style="background: #f8f9fa; padding: 1rem; border-radius: 10px; margin-top: 1rem;">
+                    <p id="transcriptionText"></p>
+                </div>
             </div>
-
-            <button id="logoutBtn" class="btn logout-btn">Sair</button>
         </div>
     </div>
 
     <script>
-        // Elementos DOM
-        const loginScreen = document.getElementById('loginScreen');
-        const dashboard = document.getElementById('dashboard');
-        const loginForm = document.getElementById('loginForm');
-        const errorMessage = document.getElementById('errorMessage');
-        const dashboardError = document.getElementById('dashboardError');
-        const dashboardSuccess = document.getElementById('dashboardSuccess');
-        const userName = document.getElementById('userName');
-        const userEmail = document.getElementById('userEmail');
-        const uploadArea = document.getElementById('uploadArea');
-        const audioFile = document.getElementById('audioFile');
-        const transcribeBtn = document.getElementById('transcribeBtn');
-        const transcriptionResult = document.getElementById('transcriptionResult');
-        const transcriptionText = document.getElementById('transcriptionText');
-        const copyBtn = document.getElementById('copyBtn');
-        const logoutBtn = document.getElementById('logoutBtn');
-        const loginBtn = document.getElementById('loginBtn');
-        const loginBtnText = document.getElementById('loginBtnText');
-        const transcribeBtnText = document.getElementById('transcribeBtnText');
-
-        // Estado da aplicação
+        let mediaRecorder;
+        let audioChunks = [];
+        let recordingTimer;
+        let recordingStartTime;
         let currentUser = null;
-        let authToken = null;
-        let selectedFile = null;
 
-        // Verificar se há token salvo
-        function checkAuth() {
-            const token = localStorage.getItem('authToken');
-            if (token) {
-                verifyToken(token);
-            }
-        }
-
-        // Verificar token
-        async function verifyToken(token) {
-            try {
-                const response = await fetch('/api/auth/verify', {
-                    headers: {
-                        'Authorization': `Bearer ${token}`
-                    }
-                });
-
-                if (response.ok) {
-                    const data = await response.json();
-                    if (data.success) {
-                        authToken = token;
-                        currentUser = data.user;
-                        showDashboard();
-                        return;
-                    }
-                }
-            } catch (error) {
-                console.error('Erro ao verificar token:', error);
-            }
-            
-            localStorage.removeItem('authToken');
-            showLogin();
-        }
-
-        // Mostrar tela de login
-        function showLogin() {
-            loginScreen.classList.remove('hidden');
-            dashboard.classList.add('hidden');
-            hideError();
-        }
-
-        // Mostrar dashboard
-        function showDashboard() {
-            loginScreen.classList.add('hidden');
-            dashboard.classList.remove('hidden');
-            userName.textContent = currentUser.username;
-            userEmail.textContent = currentUser.email;
-            hideError();
-            hideDashboardMessages();
-        }
-
-        // Mostrar erro
-        function showError(message) {
-            errorMessage.textContent = message;
-            errorMessage.classList.remove('hidden');
-        }
-
-        // Esconder erro
-        function hideError() {
-            errorMessage.classList.add('hidden');
-        }
-
-        // Mostrar erro no dashboard
-        function showDashboardError(message) {
-            dashboardError.textContent = message;
-            dashboardError.classList.remove('hidden');
-            dashboardSuccess.classList.add('hidden');
-        }
-
-        // Mostrar sucesso no dashboard
-        function showDashboardSuccess(message) {
-            dashboardSuccess.textContent = message;
-            dashboardSuccess.classList.remove('hidden');
-            dashboardError.classList.add('hidden');
-        }
-
-        // Esconder mensagens do dashboard
-        function hideDashboardMessages() {
-            dashboardError.classList.add('hidden');
-            dashboardSuccess.classList.add('hidden');
-        }
-
-        // Login
-        loginForm.addEventListener('submit', async (e) => {
+        // Função de login
+        document.getElementById('loginForm').addEventListener('submit', async function(e) {
             e.preventDefault();
             
-            const emailOrUsername = document.getElementById('emailOrUsername').value;
+            const email = document.getElementById('email').value;
             const password = document.getElementById('password').value;
-
-            loginBtn.disabled = true;
-            loginBtnText.innerHTML = '<span class="loading"></span>Entrando...';
-
+            
             try {
                 const response = await fetch('/api/auth/login', {
                     method: 'POST',
                     headers: {
-                        'Content-Type': 'application/json'
+                        'Content-Type': 'application/json',
                     },
                     body: JSON.stringify({
-                        email_or_username: emailOrUsername,
+                        email_or_username: email,
                         password: password
                     })
                 });
-
+                
                 const data = await response.json();
-
-                if (response.ok && data.success) {
-                    authToken = data.token;
+                
+                if (response.ok) {
                     currentUser = data.user;
-                    localStorage.setItem('authToken', authToken);
-                    showDashboard();
+                    localStorage.setItem('token', data.token);
+                    showApp();
                 } else {
-                    showError(data.error || 'Erro ao fazer login');
+                    showError(data.message || 'Erro no login');
                 }
             } catch (error) {
-                showError('Erro de conexão. Tente novamente.');
-            } finally {
-                loginBtn.disabled = false;
-                loginBtnText.textContent = 'Entrar';
+                showError('Erro de conexão');
             }
         });
 
-        // Upload de arquivo
-        uploadArea.addEventListener('click', () => {
-            audioFile.click();
-        });
+        function showError(message) {
+            const errorDiv = document.getElementById('errorMessage');
+            errorDiv.textContent = message;
+            errorDiv.style.display = 'block';
+            setTimeout(() => {
+                errorDiv.style.display = 'none';
+            }, 5000);
+        }
 
+        function showApp() {
+            document.getElementById('loginSection').classList.remove('active');
+            document.getElementById('appSection').classList.add('active');
+            document.getElementById('userWelcome').textContent = `Bem-vindo, ${currentUser.username}!`;
+            loadHistory();
+        }
+
+        function logout() {
+            localStorage.removeItem('token');
+            currentUser = null;
+            document.getElementById('appSection').classList.remove('active');
+            document.getElementById('loginSection').classList.add('active');
+            document.getElementById('loginForm').reset();
+        }
+
+        function switchTab(tabName) {
+            // Remove active class from all tabs and contents
+            document.querySelectorAll('.tab').forEach(tab => tab.classList.remove('active'));
+            document.querySelectorAll('.tab-content').forEach(content => content.classList.remove('active'));
+            
+            // Add active class to selected tab and content
+            event.target.classList.add('active');
+            document.getElementById(tabName + 'Tab').classList.add('active');
+        }
+
+        // Função de upload de arquivo
+        function handleFileUpload(file) {
+            if (!file) return;
+            
+            const formData = new FormData();
+            formData.append('file', file);
+            
+            document.getElementById('uploadProgress').style.display = 'block';
+            
+            fetch('/api/transcribe', {
+                method: 'POST',
+                headers: {
+                    'Authorization': `Bearer ${localStorage.getItem('token')}`
+                },
+                body: formData
+            })
+            .then(response => response.json())
+            .then(data => {
+                document.getElementById('uploadProgress').style.display = 'none';
+                if (data.success) {
+                    showTranscriptionResult(data.transcription);
+                    loadHistory();
+                } else {
+                    showError(data.message || 'Erro na transcrição');
+                }
+            })
+            .catch(error => {
+                document.getElementById('uploadProgress').style.display = 'none';
+                showError('Erro de conexão');
+            });
+        }
+
+        // Funções de gravação de áudio
+        async function toggleRecording() {
+            const button = document.getElementById('recordButton');
+            const status = document.getElementById('recordStatus');
+            
+            if (button.classList.contains('ready')) {
+                await startRecording();
+            } else {
+                stopRecording();
+            }
+        }
+
+        async function startRecording() {
+            try {
+                const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+                mediaRecorder = new MediaRecorder(stream);
+                audioChunks = [];
+                
+                mediaRecorder.ondataavailable = event => {
+                    audioChunks.push(event.data);
+                };
+                
+                mediaRecorder.onstop = () => {
+                    const audioBlob = new Blob(audioChunks, { type: 'audio/wav' });
+                    // Aqui você pode processar o áudio gravado
+                    document.getElementById('saveRecording').style.display = 'block';
+                };
+                
+                mediaRecorder.start();
+                
+                const button = document.getElementById('recordButton');
+                const status = document.getElementById('recordStatus');
+                
+                button.classList.remove('ready');
+                button.classList.add('recording');
+                button.innerHTML = '⏹️';
+                status.textContent = 'Gravando... Clique para parar';
+                
+                recordingStartTime = Date.now();
+                recordingTimer = setInterval(updateTimer, 1000);
+                
+            } catch (error) {
+                showError('Erro ao acessar o microfone');
+            }
+        }
+
+        function stopRecording() {
+            if (mediaRecorder && mediaRecorder.state === 'recording') {
+                mediaRecorder.stop();
+                mediaRecorder.stream.getTracks().forEach(track => track.stop());
+                
+                const button = document.getElementById('recordButton');
+                const status = document.getElementById('recordStatus');
+                
+                button.classList.remove('recording');
+                button.classList.add('ready');
+                button.innerHTML = '🎤';
+                status.textContent = 'Gravação finalizada. Salve para transcrever.';
+                
+                clearInterval(recordingTimer);
+            }
+        }
+
+        function updateTimer() {
+            const elapsed = Math.floor((Date.now() - recordingStartTime) / 1000);
+            const minutes = Math.floor(elapsed / 60);
+            const seconds = elapsed % 60;
+            document.getElementById('recordTimer').textContent = 
+                `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+        }
+
+        function saveRecording() {
+            if (audioChunks.length === 0) return;
+            
+            const audioBlob = new Blob(audioChunks, { type: 'audio/wav' });
+            const formData = new FormData();
+            formData.append('file', audioBlob, 'recording.wav');
+            
+            document.getElementById('saveRecording').style.display = 'none';
+            document.getElementById('recordStatus').textContent = 'Processando transcrição...';
+            
+            fetch('/api/transcribe', {
+                method: 'POST',
+                headers: {
+                    'Authorization': `Bearer ${localStorage.getItem('token')}`
+                },
+                body: formData
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    showTranscriptionResult(data.transcription);
+                    loadHistory();
+                    document.getElementById('recordStatus').textContent = 'Clique no microfone para começar a gravar';
+                    document.getElementById('recordTimer').textContent = '00:00';
+                } else {
+                    showError(data.message || 'Erro na transcrição');
+                    document.getElementById('recordStatus').textContent = 'Erro na transcrição';
+                }
+            })
+            .catch(error => {
+                showError('Erro de conexão');
+                document.getElementById('recordStatus').textContent = 'Erro de conexão';
+            });
+        }
+
+        function showTranscriptionResult(transcription) {
+            document.getElementById('transcriptionText').textContent = transcription;
+            document.getElementById('transcriptionResult').style.display = 'block';
+        }
+
+        async function loadHistory() {
+            try {
+                const response = await fetch('/api/history', {
+                    headers: {
+                        'Authorization': `Bearer ${localStorage.getItem('token')}`
+                    }
+                });
+                
+                const data = await response.json();
+                
+                if (data.success) {
+                    displayHistory(data.history);
+                }
+            } catch (error) {
+                console.error('Erro ao carregar histórico:', error);
+            }
+        }
+
+        function displayHistory(history) {
+            const historyList = document.getElementById('historyList');
+            
+            if (history.length === 0) {
+                historyList.innerHTML = '<p style="text-align: center; color: #666; padding: 2rem;">Nenhuma transcrição encontrada</p>';
+                return;
+            }
+            
+            historyList.innerHTML = history.map(item => `
+                <div class="history-item">
+                    <h4>${item.filename}</h4>
+                    <p>Data: ${new Date(item.created_at).toLocaleString('pt-BR')}</p>
+                    <p>Duração: ${item.duration || 'N/A'}</p>
+                    <div class="transcript">${item.transcription}</div>
+                </div>
+            `).join('');
+        }
+
+        // Drag and drop functionality
+        const uploadArea = document.querySelector('.upload-area');
+        
         uploadArea.addEventListener('dragover', (e) => {
             e.preventDefault();
             uploadArea.classList.add('dragover');
         });
-
+        
         uploadArea.addEventListener('dragleave', () => {
             uploadArea.classList.remove('dragover');
         });
-
+        
         uploadArea.addEventListener('drop', (e) => {
             e.preventDefault();
             uploadArea.classList.remove('dragover');
-            
             const files = e.dataTransfer.files;
             if (files.length > 0) {
-                handleFileSelect(files[0]);
+                handleFileUpload(files[0]);
             }
         });
 
-        audioFile.addEventListener('change', (e) => {
-            if (e.target.files.length > 0) {
-                handleFileSelect(e.target.files[0]);
-            }
-        });
-
-        function handleFileSelect(file) {
-            if (!file.type.startsWith('audio/')) {
-                showDashboardError('Por favor, selecione um arquivo de áudio válido.');
-                return;
-            }
-
-            selectedFile = file;
-            uploadArea.innerHTML = `
-                <div>
-                    <h3>✅ Arquivo Selecionado</h3>
-                    <p><strong>${file.name}</strong></p>
-                    <p>Tamanho: ${(file.size / 1024 / 1024).toFixed(2)} MB</p>
-                </div>
-            `;
-            transcribeBtn.classList.remove('hidden');
-            hideDashboardMessages();
-        }
-
-        // Transcrição
-        transcribeBtn.addEventListener('click', async () => {
-            if (!selectedFile) {
-                showDashboardError('Nenhum arquivo selecionado.');
-                return;
-            }
-
-            transcribeBtn.disabled = true;
-            transcribeBtnText.innerHTML = '<span class="loading"></span>Transcrevendo...';
-            hideDashboardMessages();
-
-            const formData = new FormData();
-            formData.append('audio', selectedFile);
-
-            try {
-                const response = await fetch('/api/transcribe', {
-                    method: 'POST',
+        // Verificar se já está logado
+        window.addEventListener('load', () => {
+            const token = localStorage.getItem('token');
+            if (token) {
+                // Verificar se o token ainda é válido
+                fetch('/api/verify-token', {
                     headers: {
-                        'Authorization': `Bearer ${authToken}`
-                    },
-                    body: formData
+                        'Authorization': `Bearer ${token}`
+                    }
+                })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        currentUser = data.user;
+                        showApp();
+                    } else {
+                        localStorage.removeItem('token');
+                    }
+                })
+                .catch(() => {
+                    localStorage.removeItem('token');
                 });
-
-                const data = await response.json();
-
-                if (response.ok && data.success) {
-                    transcriptionText.textContent = data.transcription;
-                    transcriptionResult.classList.remove('hidden');
-                    showDashboardSuccess('Transcrição concluída com sucesso!');
-                } else {
-                    showDashboardError(data.error || 'Erro na transcrição');
-                }
-            } catch (error) {
-                showDashboardError('Erro de conexão durante a transcrição.');
-            } finally {
-                transcribeBtn.disabled = false;
-                transcribeBtnText.textContent = 'Transcrever Áudio';
             }
         });
-
-        // Copiar texto
-        copyBtn.addEventListener('click', () => {
-            navigator.clipboard.writeText(transcriptionText.textContent).then(() => {
-                showDashboardSuccess('Texto copiado para a área de transferência!');
-            }).catch(() => {
-                showDashboardError('Erro ao copiar texto.');
-            });
-        });
-
-        // Logout
-        logoutBtn.addEventListener('click', () => {
-            localStorage.removeItem('authToken');
-            authToken = null;
-            currentUser = null;
-            selectedFile = null;
-            
-            // Reset form
-            loginForm.reset();
-            uploadArea.innerHTML = `
-                <div>
-                    <h3>📁 Enviar Arquivo de Áudio</h3>
-                    <p>Clique aqui ou arraste um arquivo de áudio</p>
-                    <p><small>Formatos suportados: MP3, WAV, M4A, FLAC</small></p>
-                </div>
-            `;
-            transcribeBtn.classList.add('hidden');
-            transcriptionResult.classList.add('hidden');
-            
-            showLogin();
-        });
-
-        // Inicializar aplicação
-        checkAuth();
     </script>
 </body>
 </html>
